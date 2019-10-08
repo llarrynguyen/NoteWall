@@ -1,2 +1,2 @@
-# Stickies
-An Android App for keeping colored sticky notes.
+# NoteWall
+An Android App for keeping your notes on the wall
