@@ -68,7 +68,6 @@ class NotesListAdapter(context: Context, items: MutableList<Note>)
 		super.onBindViewHolderInner(holder, position)
 
 		val note = items[position]
-
 		swipeLayoutManager.bind(holder.swipeLayout, note.id)
 		swipeLayoutManager.closeLayout(note.id, false)
 

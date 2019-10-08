@@ -18,7 +18,6 @@ class SwipeLayoutManager(private val openOnlyOne: Boolean = true) {
 
 	fun bind(swipeLayout: SwipeLayout, id: Any) {
 		layouts[id] = WeakReference(swipeLayout)
-
 		swipeLayout.setOnSwipeListener(object : SwipeLayout.OnSwipeListener {
 
 			override fun onBeginSwipe(swipeLayout: SwipeLayout, moveToRight: Boolean) {
