@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools">
+	<data>
+		<import type="android.view.View" />
+		<variable
+			name="viewModel"
+			type="com.larrynguyen.notewall.noteslist.NotesListAdapter.ViewHolder"/>
+	</data>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/notesListItemHeight"
+		android:orientation="vertical"
+		android:background="@drawable/notes_list_item_bg"
+		>
+		<com.larrynguyen.notewall.view.SwipeLayout
+			android:id="@+id/swipeLayout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			>
+			<android.support.constraint.ConstraintLayout
+				android:id="@+id/content"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:background="@drawable/ripple_effect_background"
+				android:onClick="@{() -> viewModel.onClick()}"
+				tools:background="@color/noteYellow"
+				app:backgroundTint="@{viewModel.backColor}"
+				>
+				<View
+					android:id="@+id/importanceView"
+					android:layout_width="8dp"
+					android:layout_height="match_parent"
+					android:background="@color/colorAccent"
+					android:visibility="@{viewModel.isImportant ? View.VISIBLE : View.INVISIBLE}"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					/>
+				<com.larrynguyen.notewall.view.DrawableCompatTextView
+					android:id="@+id/titleView"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:textColor="@color/stickyTitle"
+					android:text="@={viewModel.titleField}"
+					app:strikeThrough="@{viewModel.isCompleted}"
+					app:layout_constraintStart_toEndOf="@+id/importanceView"
+					app:layout_constraintHorizontal_chainStyle="packed"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/dateView"
+					tools:text="Note Title"
+					style="@style/noteTitle"
+					/>
+				<TextView
+					android:id="@+id/dateView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="8dp"
+					android:layout_marginRight="8dp"
+					android:text="@={viewModel.dateField}"
+					app:layout_constraintStart_toEndOf="@id/titleView"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					tools:text="08/08/2018"
+					/>
+			</android.support.constraint.ConstraintLayout>
+			<LinearLayout
+				android:id="@+id/rightMenu"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:orientation="horizontal"
+				android:onClick="@{() -> viewModel.onImportantButtonClick()}"
+				app:sticky_sensitivity="0.5"
+				app:bring_to_clamp="3dp"
+				app:gravity="right"
+				app:clamp="self"
+				>
+				<com.larrynguyen.notewall.view.DrawableCompatTextView
+					android:id="@+id/importantButton"
+					android:layout_width="@dimen/notesListItemHeight"
+					android:layout_height="match_parent"
+					android:gravity="center"
+					android:paddingTop="12dp"
+					android:paddingBottom="10dp"
+					android:textColor="@android:color/white"
+					android:textSize="12sp"
+					android:ellipsize="end"
+					android:maxLines="1"
+					android:text="@{viewModel.isImportant() ? @string/menu_unimportant : @string/menu_important}"
+					android:background="@drawable/ripple_white_bg"
+					app:backgroundTint="@android:color/holo_orange_dark"
+					tools:background="@android:color/holo_orange_dark"
+					android:onClick="@{() -> viewModel.onImportantButtonClick()}"
+					app:drawableTop="@{viewModel.isImportant() ? @drawable/ic_important_off : @drawable/ic_important_on}"
+					tools:text="Test"
+					tools:drawableTop="@drawable/ic_important_on"
+					/>
+				<com.larrynguyen.notewall.view.DrawableCompatTextView
+					android:id="@+id/completedButton"
+					android:layout_width="@dimen/notesListItemHeight"
+					android:layout_height="match_parent"
+					android:gravity="center"
+					android:paddingTop="12dp"
+					android:paddingBottom="10dp"
+					android:textColor="@android:color/white"
+					android:textSize="12sp"
+					android:ellipsize="end"
+					android:maxLines="1"
+					android:text="@{viewModel.isCompleted() ? @string/menu_uncompleted : @string/menu_completed}"
+					android:background="@drawable/ripple_white_bg"
+					app:backgroundTint="@android:color/holo_blue_dark"
+					tools:background="@android:color/holo_blue_dark"
+					android:onClick="@{() -> viewModel.onCompletedButtonClick()}"
+					app:drawableTop="@{viewModel.isCompleted() ? @drawable/ic_completed_off : @drawable/ic_completed_on}"
+					tools:text="Test"
+					tools:drawableTop="@drawable/ic_completed_on"
+					/>
+				<com.larrynguyen.notewall.view.DrawableCompatTextView
+					android:id="@+id/deleteButton"
+					android:layout_width="@dimen/notesListItemHeight"
+					android:layout_height="match_parent"
+					android:gravity="center"
+					android:paddingTop="12dp"
+					android:paddingBottom="10dp"
+					android:textColor="@android:color/white"
+					android:textSize="12sp"
+					android:ellipsize="end"
+					android:maxLines="1"
+					android:text="@string/delete"
+					android:background="@drawable/ripple_white_bg"
+					app:backgroundTint="@android:color/holo_red_dark"
+					android:onClick="@{() -> viewModel.onDeleteButtonClick()}"
+					app:drawableTop="@drawable/ic_delete"
+					tools:text="Test"
+					tools:drawableTop="@drawable/ic_delete"
+					tools:background="@android:color/holo_red_dark"
+					/>
+			</LinearLayout>
+		</com.larrynguyen.notewall.view.SwipeLayout>
+	</LinearLayout>
+</layout>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+	>
+	<data>
+		<import type="android.view.View" />
+
+		<variable
+			name="viewModel"
+			type="com.larrynguyen.notewall.addeditnote.AddEditNoteViewModel"
+			/>
+	</data>
+	<android.support.constraint.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@{viewModel.colorField}"
+		tools:context=".noteslist.NotesListActivity"
+		tools:background="@color/noteYellow"
+		>
+
+		<android.support.design.widget.AppBarLayout
+			android:id="@+id/appbar"
+			android:layout_width="0dp"
+			android:layout_height="?attr/actionBarSize"
+			android:theme="@style/AppTheme.AppBarOverlay"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toTopOf="@+id/messageField"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			tools:layout_height="56dp"
+			tools:background="@color/colorPrimary"
+			>
+			<android.support.v7.widget.AppCompatEditText
+				android:id="@+id/titleField"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:text="@={viewModel.titleField}"
+				android:hint="@string/typeTitle"
+				android:layout_marginStart="8dp"
+				android:layout_marginLeft="8dp"
+				android:layout_marginEnd="8dp"
+				android:layout_marginRight="8dp"
+				android:inputType="text|textCapWords"
+				android:lines="1"
+				android:singleLine="true"
+				android:imeOptions="actionNext"
+				android:nextFocusForward="@+id/messageField"
+				android:background="@null"
+				style="@style/AppTheme.ActionBarTextInput"
+				/>
+
+		</android.support.design.widget.AppBarLayout>
+
+		<com.larrynguyen.notewall.view.StyleableEditText
+			android:id="@+id/messageField"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:padding="8dp"
+			android:gravity="top"
+			android:background="@null"
+			android:inputType="textMultiLine|textCapSentences"
+			android:text="@={viewModel.messageField}"
+			android:hint="@string/typeMessage"
+			app:layout_constraintTop_toBottomOf="@+id/appbar"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toTopOf="@+id/topicField"
+			/>
+
+		<android.support.v7.widget.AppCompatAutoCompleteTextView
+			android:id="@+id/topicField"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="16dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginRight="16dp"
+			android:hint="@string/typeTopic"
+			android:imeOptions="actionNext"
+			android:inputType="text|textCapWords"
+			android:nextFocusForward="@+id/messageField"
+			android:text="@={viewModel.topicField}"
+			android:adapter="@{viewModel.topicsAdapter}"
+			app:layout_constraintBottom_toBottomOf="@+id/addNoteButton"
+			app:layout_constraintEnd_toStartOf="@+id/addNoteButton"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/addNoteButton" />
+
+		<android.support.design.widget.FloatingActionButton
+			android:id="@+id/openMenuButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp"
+			android:onClick="@{() -> viewModel.onMenuButtonClicked()}"
+			app:backgroundTint="@color/fabAddNote"
+			app:srcCompat="@drawable/ic_context_menu"
+			app:fabSize="mini"
+			app:layout_constraintBottom_toTopOf="@+id/addNoteButton"
+			app:layout_constraintStart_toStartOf="@+id/addNoteButton"
+			app:layout_constraintEnd_toEndOf="@+id/addNoteButton"
+			/>
+
+		<android.support.design.widget.FloatingActionButton
+			android:id="@+id/addNoteButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="16dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginRight="16dp"
+			app:backgroundTint="@color/fabSubmitNote"
+			android:onClick="@{() -> viewModel.onSubmitClicked()}"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:srcCompat="@drawable/ic_done"
+			app:fabSize="normal"
+			/>
+
+	</android.support.constraint.ConstraintLayout>
+</layout>

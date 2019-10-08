@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+	>
+	<data>
+		<import type="android.view.View" />
+
+		<variable
+			name="viewModel"
+			type="com.larrynguyen.notewall.noteslist.NotesListViewModel"
+			/>
+		</data>
+	<android.support.constraint.ConstraintLayout
+		android:id="@+id/rootContainer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@android:color/white"
+		tools:context=".noteslist.NotesListActivity"
+		>
+
+		<include
+			android:id="@+id/appbar"
+			layout="@layout/appbar"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:background="#0A0606"
+			app:layout_constraintBottom_toTopOf="@+id/notesListView"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/notesListView"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/appbar"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+			tools:listitem="@layout/notes_list_item"
+			/>
+
+		<android.support.v7.widget.AppCompatTextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="@string/list_empty_msg"
+			android:background="@android:color/white"
+			android:visibility="@{viewModel.empty ? View.VISIBLE : View.GONE}"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			/>
+
+		<com.larrynguyen.notewall.view.DrawableCompatTextView
+			android:id="@+id/hintFullNote"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:maxLines="2"
+			android:ellipsize="end"
+			android:gravity="center"
+			android:text="@string/hint_add_note_full"
+			android:visibility="@{viewModel.empty ? View.VISIBLE : View.GONE}"
+			android:drawablePadding="5dp"
+			app:drawableEnd="@drawable/ic_arrow_right"
+			app:layout_constraintTop_toTopOf="@+id/openNoteFormButton"
+			app:layout_constraintBottom_toBottomOf="@+id/openNoteFormButton"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toStartOf="@+id/openNoteFormButton"
+			tools:drawableEnd="@drawable/ic_arrow_right"
+			app:layout_constraintHorizontal_bias="1.0"
+			/>
+
+		<com.larrynguyen.notewall.view.DrawableCompatTextView
+			android:id="@+id/hintQuickNote"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:maxLines="2"
+			android:ellipsize="end"
+			android:gravity="center"
+			android:text="@string/hint_add_note_quick"
+			android:visibility="@{viewModel.empty ? View.VISIBLE : View.GONE}"
+			android:drawablePadding="5dp"
+			app:drawableEnd="@drawable/ic_arrow_right"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toStartOf="@+id/addQuickNoteButton"
+			app:layout_constraintBottom_toBottomOf="@+id/addQuickNoteButton"
+			app:layout_constraintTop_toTopOf="@+id/addQuickNoteButton"
+			tools:drawableEnd="@drawable/ic_arrow_right"
+			app:layout_constraintHorizontal_bias="1.0"
+			/>
+
+		<android.support.design.widget.FloatingActionButton
+			android:id="@+id/openNoteFormButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp"
+			android:onClick="@{() -> viewModel.onOpenNoteFormClicked()}"
+			app:srcCompat="@drawable/ic_add_note"
+			app:backgroundTint="@color/fabSubmitNote"
+			app:fabSize="mini"
+			app:layout_constraintEnd_toEndOf="@+id/addQuickNoteButton"
+			app:layout_constraintBottom_toTopOf="@+id/addQuickNoteButton"
+			app:layout_constraintStart_toStartOf="@+id/addQuickNoteButton"
+			/>
+
+		<android.support.design.widget.FloatingActionButton
+			android:id="@+id/addQuickNoteButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp"
+			android:onClick="@{() -> viewModel.onAddQuickNoteClicked()}"
+			app:srcCompat="@{viewModel.isQuickNoteMode() ? @drawable/ic_done : @drawable/ic_plus}"
+			app:backgroundTint="@color/fabAddNote"
+			app:fabSize="normal"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			tools:srcCompat="@drawable/ic_plus"
+			/>
+
+	</android.support.constraint.ConstraintLayout>
+</layout>
